@@ -1,0 +1,36 @@
+﻿@model IEnumerable<RestaurantReviews.Library.Models.Restaurant>
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h1>Welcome to Smart Bites!</h1><br />
+
+<div class="jumbotron">
+    @*<h1>ASP.NET</h1>
+        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+    <img src="https://i.imgur.com/vbxHTuL.jpg" alt="Food" />
+</div>
+<br />
+<div>
+    <h3>Top 3 Restaurants</h3>
+</div>
+<hr />
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+        <div class="col-md-4">
+            <dl class="dl-horizontal">
+                <dd>
+                    <h4>@Html.DisplayFor(model => item.Name)</h4>
+                </dd>
+
+                <dd>
+                    <h6 class="d-inline-flex">Rating:</h6> @Html.DisplayFor(model => item.AverageRating)
+                </dd>
+            </dl>
+        </div>
+    }
+</div>
