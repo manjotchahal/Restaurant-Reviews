@@ -5,32 +5,55 @@
 }
 
 <h1>Welcome to Smart Bites!</h1><br />
+<img class="img-fluid" src="https://i.imgur.com/vbxHTuL.jpg" alt="Food" />
 
-<div class="jumbotron">
-    @*<h1>ASP.NET</h1>
-        <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
-        <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
-    <img src="https://i.imgur.com/vbxHTuL.jpg" alt="Food" />
-</div>
+@*<div class="jumbotron">*@
+@*<h1>ASP.NET</h1>
+    <p class="lead">ASP.NET is a free web framework for building great Web sites and Web applications using HTML, CSS and JavaScript.</p>
+    <p><a href="https://asp.net" class="btn btn-primary btn-lg">Learn more &raquo;</a></p>*@
+@*</div>*@
+<br />
 <br />
 <div>
-    <h3>Top 3 Restaurants</h3>
+    <h3 class="text-center">Top 3 Restaurants</h3>
 </div>
-<hr />
 
-<div class="row">
+<div class="card-deck">
     @foreach (var item in Model)
     {
-        <div class="col-md-4">
-            <dl class="dl-horizontal">
-                <dd>
-                    <h4>@Html.DisplayFor(model => item.Name)</h4>
-                </dd>
-
-                <dd>
-                    <h6 class="d-inline-flex">Rating:</h6> @Html.DisplayFor(model => item.AverageRating)
-                </dd>
-            </dl>
+        string a = "https://logo.clearbit.com/" + item.Name.Replace(" ", string.Empty).Replace("'", string.Empty) + ".com";
+        <div class="col-sm-4 mt-sm-3 mb-sm-3">
+            <div class="card">
+                <div class="mt-sm-4" style="height:128px; background:url(@a) no-repeat center center">
+                    @*<img class="img-fluid mx-auto d-block" src=@a alt="Restaurant logo">*@
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>@Html.ActionLink(item.Name, "Details", "Restaurants", new { id = item.Id }, null)</h4>
+                        <h5>
+                            @if (item.ReviewCount == 0)
+                            {<text>No rating</text>}
+                        else
+                        { @item.AverageRating<text>/10</text>}
+                        </h5>
+                        <h5>
+                            @item.ReviewCount
+                            @if (item.ReviewCount == 1)
+                            {<text>review</text>}
+                        else
+                        { <text>reviews</text>}
+                        </h5>
+                        @item.Street<br />
+                        @item.City, @item.State @item.Zipcode<br />
+                        @item.Phone<br />
+                        <h6>
+                            @Html.ActionLink("Reviews", "Index", "Reviews", new { id = item.Id }, null) |
+                            @Html.ActionLink("Edit", "Edit", "Restaurants", new { id = item.Id }, null) |
+                            @Html.ActionLink("Delete", "Delete", "Restaurants", new { id = item.Id }, null)
+                        </h6>
+                    </div>
+                </div>
+            </div>
         </div>
     }
 </div>

@@ -20,7 +20,10 @@ namespace RestaurantReviews.Library.Repositories
 
         public Review GetById(object id)
         {
-            return DataToLibrary(this._context.Reviews.Find(id));
+            var rev = _context.Reviews.Find(id);
+            if (rev != null)
+                return DataToLibrary(rev);
+            return null;
         }
 
         public void Insert(Review entity)
@@ -125,9 +128,47 @@ namespace RestaurantReviews.Library.Repositories
             }
         }
 
-        public virtual IEnumerable<Review> GetAllByRestaurant(int id)
+        public virtual IEnumerable<Review> GetAllByRestaurant(int? id)
         {
             var list = this._context.Reviews.Where(x => x.Restaurant.Id == id).ToList();
+            return list.Select(x => DataToLibrary(x)).ToList();
+        }
+
+        public virtual IEnumerable<Review> SortByRatingAscending(int? id, string q = null)
+        {
+            if (q != null)
+                return SearchReviews(id, q).OrderBy(x => x.Rating)
+                    .ThenByDescending(x => x.Modified);
+            return GetAllByRestaurant(id).OrderBy(x => x.Rating)
+                .ThenByDescending(x => x.Modified);
+        }
+
+        public virtual IEnumerable<Review> SortByRatingDescending(int? id, string q = null)
+        {
+            if (q != null)
+                return SearchReviews(id, q).OrderByDescending(x => x.Rating)
+                    .ThenByDescending(x => x.Modified);
+            return GetAllByRestaurant(id).OrderByDescending(x => x.Rating)
+                .ThenByDescending(x => x.Modified);
+        }
+
+        public virtual IEnumerable<Review> SortByNewest(int? id, string q = null)
+        {
+            if (q != null)
+                return SearchReviews(id, q).OrderByDescending(x => x.Modified);
+            return GetAllByRestaurant(id).OrderByDescending(x => x.Modified);
+        }
+
+        public virtual IEnumerable<Review> SortByOldest(int? id, string q = null)
+        {
+            if (q != null)
+                return SearchReviews(id, q).OrderBy(x => x.Modified);
+            return GetAllByRestaurant(id).OrderBy(x => x.Modified);
+        }
+
+        public virtual IEnumerable<Review> SearchReviews(int? id, string q)
+        {
+            var list = _context.Reviews.Where(x => x.Restaurant.Id == id && (x.User.Contains(q) || x.Comment.Contains(q) || x.Modified.ToString().Contains(q) || x.Rating.ToString().Contains(q))).ToList();
             return list.Select(x => DataToLibrary(x)).ToList();
         }
 

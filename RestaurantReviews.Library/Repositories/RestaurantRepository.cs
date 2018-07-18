@@ -20,7 +20,10 @@ namespace RestaurantReviews.Library.Repositories
 
         public Restaurant GetById(object id)
         {
-            return DataToLibrary(this._context.Restaurants.Find(id));
+            var rest = _context.Restaurants.Find(id);
+            if (rest != null)
+                return DataToLibrary(rest);
+            return null;
         }
 
         public void Insert(Restaurant entity)

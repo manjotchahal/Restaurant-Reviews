@@ -8,7 +8,8 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    @Html.Partial("NavBarPartial")
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -26,12 +27,12 @@
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
+    </div>*@
+    <div class="container body-content my-5">
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p>&copy; @DateTime.Now.Year - Smart Bites</p>
         </footer>
     </div>
 

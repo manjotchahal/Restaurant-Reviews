@@ -106,5 +106,30 @@ namespace RestaurantReviews.Library
         {
             return revrepo.GetAllByRestaurant(id);
         }
+
+        public virtual IEnumerable<Review> SortByRatingAscending(int? id, string q = null)
+        {
+            return revrepo.SortByRatingAscending(id, q);
+        }
+
+        public virtual IEnumerable<Review> SortByRatingDescending(int? id, string q = null)
+        {
+            return revrepo.SortByRatingDescending(id, q);
+        }
+
+        public virtual IEnumerable<Review> SortByNewest(int? id, string q = null)
+        {
+            return revrepo.SortByNewest(id, q);
+        }
+
+        public virtual IEnumerable<Review> SortByOldest(int? id, string q = null)
+        {
+            return revrepo.SortByOldest(id, q);
+        }
+
+        public virtual IEnumerable<Review> SearchReviews(int id, string q = null)
+        {
+            return revrepo.SearchReviews(id, q);
+        }
     }
 }

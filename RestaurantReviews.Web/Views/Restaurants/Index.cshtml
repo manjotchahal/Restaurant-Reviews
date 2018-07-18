@@ -1,0 +1,85 @@
+﻿@model IEnumerable<RestaurantReviews.Library.Models.Restaurant>
+
+@{
+    ViewBag.Title = "Index";
+}
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    @*@Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-default" })*@
+    <div class="row">
+        <div class="col-lg-6">
+            @*<div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search for...">
+                </div>*@
+            @Html.ActionLink("Add Restaurant", "Create", null, new { @class = "btn btn-primary" })
+        </div>
+        <div class="col-lg-6">
+            @*<div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                </div>*@
+            <form asp-controller="Restaurants" asp-action="Index" method="get" class="d-flex float-right">
+                <input type="hidden" name="sort" value=@ViewBag.Sort />
+                <input type="text" class="form-control " name="q" value=@ViewBag.Query>
+                @if (ViewBag.Query != null && ViewBag.Query != "")
+                {
+                    @Html.ActionLink("Clear", "Index", new { sort = ViewBag.Sort, q = "" }, new { @class = "btn btn-default" })
+                }
+                <input type="submit" class="btn btn-primary " value="Search" />
+                @*<input type="submit" value="Search" />*@
+            </form>
+        </div>
+    </div>
+</p>
+
+<h6>
+    Sort by: @Html.ActionLink("Name (Ascending)", "Index", new { sort = "name_asc", q = ViewBag.Query }) |
+    @Html.ActionLink("Name (Descending)", "Index", new { sort = "name_desc", q = ViewBag.Query }) |
+    @Html.ActionLink("Highest Rated", "Index", new { sort = "rating_desc", q = ViewBag.Query }) |
+    @Html.ActionLink("Most Reviewed", "Index", new { sort = "review_count", q = ViewBag.Query })
+</h6>
+
+<div class="card-deck">
+    @foreach (var item in Model)
+    {
+        string a = "https://logo.clearbit.com/" + item.Name.Replace(" ", string.Empty).Replace("'", string.Empty) + ".com";
+        <div class="col-sm-4 mt-sm-3 mb-sm-3">
+            <div class="card">
+                <div class="mt-sm-4" style="height:128px; background:url(@a) no-repeat center center">
+                    @*<img class="img-fluid mx-auto d-block" src=@a alt="Restaurant logo">*@
+                </div>
+                <div class="card-body">
+                    <div class="text-center">
+                        <h4>@Html.ActionLink(item.Name, "Details", new { id = item.Id })</h4>
+                        <h5>
+                            @if (item.ReviewCount == 0)
+                                {<text>No rating</text>}
+                            else
+                                { @item.AverageRating<text>/10</text>}
+                        </h5>
+                        <h5>
+                            @item.ReviewCount
+                            @if (item.ReviewCount == 1)
+                                {<text>review</text>}
+                            else
+                                { <text>reviews</text>}
+                        </h5>
+                        @item.Street<br />
+                        @item.City, @item.State @item.Zipcode<br />
+                        @item.Phone<br />
+                        <h6>
+                            @Html.ActionLink("Reviews", "Index", "Reviews", new { id = item.Id }, null) |
+                            @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                            @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                        </h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>

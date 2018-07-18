@@ -12,24 +12,24 @@ namespace RestaurantReviews.Data
     {
         static void Main(string[] args)
         {
-            using (var db = new RestaurantReviewsContext())
-            {
-                //Restaurant restaurant = new Restaurant() { Name = "Burger King", Street = "2602 E Fletcher Ave", City = "Tampa", State = "Florida", Country = "USA", Zipcode = "33612", Phone = "(813) 977-9288", Website = "https://www.subway.com" };
-                //db.Restaurants.Add(restaurant);
-                //var rest = db.Restaurants.Find(1);
-                //db.Restaurants.Remove(rest);
-                db.SaveChanges();
+            //using (var db = new RestaurantReviewsContext())
+            //{
+            //    //Restaurant restaurant = new Restaurant() { Name = "Burger King", Street = "2602 E Fletcher Ave", City = "Tampa", State = "Florida", Country = "USA", Zipcode = "33612", Phone = "(813) 977-9288", Website = "https://www.subway.com" };
+            //    //db.Restaurants.Add(restaurant);
+            //    //var rest = db.Restaurants.Find(1);
+            //    //db.Restaurants.Remove(rest);
+            //    db.SaveChanges();
 
-                var query = from r in db.Restaurants
-                            orderby r.Name
-                            select r;
+            //    var query = from r in db.Restaurants
+            //                orderby r.Name
+            //                select r;
 
-                foreach (var item in query)
-                {
-                    Console.WriteLine(item.Id+"\n"+item.Name+"\n"+item.Address);
-                }
-                Console.Read();
-            }
+            //    foreach (var item in query)
+            //    {
+            //        Console.WriteLine(item.Id+"\n"+item.Name+"\n"+item.Address);
+            //    }
+            //    Console.Read();
+            //}
         }
     }
 

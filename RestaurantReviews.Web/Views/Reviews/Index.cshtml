@@ -1,0 +1,100 @@
+﻿@model IEnumerable<RestaurantReviews.Library.Models.Review>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Reviews for @ViewBag.RestaurantName</h2>
+
+<p>
+    @*@Html.ActionLink("Create New", "Create")*@
+    <div class="row">
+        <div class="col-lg-6">
+            @*<div class="input-group">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                    <input type="text" class="form-control" placeholder="Search for...">
+                </div>*@
+            @Html.ActionLink("Add Review", "Create", null, new { @class = "btn btn-primary" })
+        </div>
+        <div class="col-lg-6">
+            @*<div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                        <button class="btn btn-secondary" type="button">Go!</button>
+                    </span>
+                </div>*@
+            <form asp-controller="Reviews" asp-action="Index" method="get" class="d-flex float-right">
+                <input type="hidden" name="sort" value=@ViewBag.Sort />
+                <input type="text" class="form-control " name="q" value=@ViewBag.Query>
+                @if (ViewBag.Query != null && ViewBag.Query != "")
+                {
+                    @Html.ActionLink("Clear", "Index", new { id = ViewBag.RestaurantId, sort = ViewBag.Sort, q = "" }, new { @class = "btn btn-default" })
+                }
+                <input type="submit" class="btn btn-primary " value="Search"/>
+                @*@Html.ActionLink("Search", "Index", new { id = ViewBag.RestaurantId, sort = ViewBag.Sort, q = queryValue()}, new { @class = "btn btn-primary" })*@
+                @*<input type="submit" value="Search" />*@
+            </form>
+        </div>
+    </div>
+</p>
+
+<h6>
+    Sort by: @Html.ActionLink("Most Recent", "Index", new { id = ViewBag.RestaurantId, sort = "date_desc", q = ViewBag.Query }) |
+    @Html.ActionLink("Oldest", "Index", new { id = ViewBag.RestaurantId, sort = "date_asc", q = ViewBag.Query }) |
+    @Html.ActionLink("Highest Rating", "Index", new { id = ViewBag.RestaurantId, sort = "rating_desc", q = ViewBag.Query }) |
+    @Html.ActionLink("Lowest Rating", "Index", new { id = ViewBag.RestaurantId, sort = "rating_asc", q = ViewBag.Query })
+</h6>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Rating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.User)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Comment)
+        </th>
+        @*<th>
+                @Html.DisplayNameFor(model => model.Created)
+            </th>*@
+        <th>
+            @*@Html.DisplayNameFor(model => model.Modified)*@
+            Reviewed on:
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Rating)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Comment)
+            </td>
+            @*<td>
+                    @Html.DisplayFor(modelItem => item.Created)
+                </td>*@
+            <td>
+                @Html.DisplayFor(modelItem => item.Modified)
+            </td>
+            <td align="right">
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @*@Html.ActionLink("Details", "Details", new { id=item.Id }) |*@
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
+
+</table>
+<p>
+    @Html.ActionLink("Back to Restaurants", "Index", "Restaurants", null, new { @class = "btn btn-default" })
+</p>
+
