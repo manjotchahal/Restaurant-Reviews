@@ -62,8 +62,17 @@ namespace RestaurantReviews.Web.Controllers
         }
 
         // GET: Reviews/Create
-        public ActionResult Create()
+        public ActionResult Create(int? id)
         {
+            if (id == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
+            Restaurant rest = service.GetRestaurantById(id);
+
+            if (rest == null)
+                return HttpNotFound();
+
+            TempData["RestaurantId"] = id;
             TempData.Keep("RestaurantId");
             ViewBag.RestaurantId = TempData.Peek("RestaurantId");
             TempData.Keep("RestaurantId");

@@ -16,7 +16,7 @@
             </span>
             <input type="text" class="form-control" placeholder="Search for...">
         </div>*@
-            @Html.ActionLink("Add Review", "Create", null, new { @class = "btn btn-primary" })
+            @Html.ActionLink("Add Review", "Create", new { id = ViewBag.RestaurantId } , new { @class = "btn btn-primary" })
             @if (!Model.Any())
             {
                 @Html.ActionLink("Back to Restaurants", "Index", "Restaurants", null, new { @class = "btn btn-default" })
